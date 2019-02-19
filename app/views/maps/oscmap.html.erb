@@ -1,0 +1,21 @@
+<% provide(:title, "Home") %>
+<h1>Sample App</h1>
+
+<div id="map" style="height: 500px; width: 500px;"></div>
+
+<%= @lp %>
+
+<%=
+map(:center => {
+    :latlng => [36, 140],
+    :zoom => 4,
+})
+%>
+
+<script>
+var test = <%= @test %> // 変数に代入しなくても使える
+for(var array_count = 0; array_count < test.length; array_count++){
+  console.log(test[array_count]);
+  L.marker(test[array_count]).addTo(map);
+}
+</script>
