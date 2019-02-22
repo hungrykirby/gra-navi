@@ -32,6 +32,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'leaflet-rails'
 gem 'dotenv-rails'
+gem "jquery-rails"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

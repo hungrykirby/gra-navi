@@ -26,4 +26,10 @@ class MapsController < ApplicationController
         end
 
     end
+
+    def update
+        place = params[:data][:text]
+        results = { :message => place }
+        render partial: 'ajax_partial', locals: { :results => results }
+    end
 end

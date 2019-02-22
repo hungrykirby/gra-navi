@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   get 'static_pages/home'
   get 'maps/oscmap'
   root 'maps#oscmap'
+  post  'maps/update', to: 'maps#update', as: 'maps_update'
 end

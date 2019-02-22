@@ -1,5 +1,20 @@
 <% provide(:title, "Gra-Navi") %>
 <h1>Gra-Navi Top</h1>
+
+<!-- <form id="form" action="#" onsubmit="return false;">
+  <input id="sbox" name="s" type="text" placeholder="キーワードを入力" />
+  <input id="sbtn" type="submit" value="検索" />
+</form> -->
+
+<div id="request_ajax_update" >
+  <%= form_tag(maps_update_path, method: :post, remote: true, id: 'form') { %>
+    <%= text_field :data, :text, id: 'sbox', placeholder: '検索地点を入力する' %>
+    <%= submit_tag '検索する', id: 'sbtn' %>
+  <% } %>
+</div>
+
+<div id="result"></div>
+
 <div id="map" class="box"></div>
 
 <%=
@@ -12,7 +27,16 @@ map(:center => {
 <script>
 const yado_latlng = <%= @yado_data %>;
 for(var array_count = 0; array_count < yado_latlng.length; array_count++){
-  console.log(yado_latlng[array_count]);
+  //console.log(yado_latlng[array_count]);
   L.marker(yado_latlng[array_count]).addTo(map);
 }
+</script>
+<script>
+  $(function() {
+  $('#request_ajax_update').on('ajax:complete', function(event) {
+    var response;
+    response = event.detail[0].response;
+    $('#result').html(response);
+  });
+});
 </script>

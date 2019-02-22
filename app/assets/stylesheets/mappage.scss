@@ -30,3 +30,49 @@ $sp: 480px;  // スマホ
         height: 400px;
     };
 }
+
+$hForm: 50px;
+$maru: 2px;
+$wForm: 270px;
+
+$btnColor: #7fbfff;
+$btnColorHover: #3a9cff;
+
+
+form#form{
+  position: relative;
+  width: $wForm;
+  margin-bottom: 15px;
+  height: $hForm;
+
+  #sbox{
+    position:absolute;
+    left:0;
+    top:0; 	
+    outline:0;
+    height:$hForm - $maru * 2;
+    padding:0 10px;
+    border-radius:$maru;		
+    background:#eee;
+    border-color: #666;
+    width: $wForm - 20px;
+  }
+
+  #sbtn{
+    width:70px;/*検索ボタンの横幅*/ 
+    height:$hForm;/*検索ボタンの縦幅*/ 
+    position:absolute;/*検索ボタンの絶対位置*/  
+    left:270px + $maru * 2;/*検索ボタンの位置調整*/  
+    top:0;
+    border-radius:$maru;/*検索ボタンの角を丸める*/ 
+    background: $btnColor;/*検索ボタンの背景カラー*/ 
+    border:none;/*検索ボタンの枠線を消す*/ 
+    color:#fff;/*検索ボタンのテキストカラー*/ 
+    font-weight:bold;/*検索ボタンのテキスト太字*/ 
+    font-size:16px;/*検索ボタンのフォントサイズ*/ 
+    
+    &:hover{
+      background: $btnColorHover;
+    }
+  }
+}
