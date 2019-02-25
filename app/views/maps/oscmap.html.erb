@@ -7,15 +7,17 @@
 </form> -->
 
 <div id="request_ajax_update" >
-  <%= form_tag(maps_update_path, method: :post, remote: true, id: 'form') { %>
-    <%= text_field :data, :text, id: 'sbox', placeholder: '検索地点を入力する' %>
-    <%= submit_tag '検索する', id: 'sbtn' %>
-  <% } %>
+  <%= form_with url: maps_update_path, id: 'form', remote: false do |form| %>
+    <%= form.text_field :data, id: 'sbox' %>
+    <%= form.submit '検索する', id: 'sbtn' %>
+  <% end %>
 </div>
 
 <div id="result"></div>
 
-<div id="map" class="box"></div>
+<div id="map_wrapper">
+  <div id="map" class="box"></div>
+</div>
 
 <%=
 map(:center => {
@@ -33,10 +35,33 @@ for(var array_count = 0; array_count < yado_latlng.length; array_count++){
 </script>
 <script>
   $(function() {
-  $('#request_ajax_update').on('ajax:complete', function(event) {
-    var response;
-    response = event.detail[0].response;
-    $('#result').html(response);
+    $('#request_ajax_update').on('ajax:success', function(event) {
+      const data = event.detail[0];
+      const lon = data['lon'];
+      const lat = data['lat'];
+
+      document.getElementById('map_wrapper').innerHTML = "<div id='map' class='box' style=''></div>";
+
+      if (map != undefined) { map.remove(); }
+
+      var map = L.map('map').setView([lat,lon], 16);
+
+      const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+        attribution: '© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+      });
+
+      const yado_latlng = data['yado_data'];
+
+      for(var array_count = 0; array_count < yado_latlng.length; array_count++){
+        L.marker(yado_latlng[array_count]).addTo(map);
+      }
+
+      tileLayer.addTo(map);
+      $('#result').text(data['lat'] + ':' + data['lon']);
+    });
+
+    $('#request_ajax_update').on('ajax:error', function(event) {
+      alert("失敗！");
+    });
   });
-});
 </script>
