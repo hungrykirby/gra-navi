@@ -27,10 +27,17 @@ map(:center => {
 %>
 
 <script>
-const yado_latlng = <%= @yado_data %>;
+const yado_latlng = <%= @yado_place %>;
+const yado_reviewAverage = <%= @yado_reviewAverage %>
+
 for(var array_count = 0; array_count < yado_latlng.length; array_count++){
-  //console.log(yado_latlng[array_count]);
-  L.marker(yado_latlng[array_count]).addTo(map);
+  const d = Math.pow(yado_reviewAverage[array_count], 8)/1000 + 10;
+  var icon = L.divIcon({
+    className: 'marker',
+    iconSize: [d, d],
+    html: 'a'
+  });
+  L.marker(yado_latlng[array_count], {icon: icon, riseOnHover: true, opacity: 0.3}).addTo(map);
 }
 </script>
 <script>

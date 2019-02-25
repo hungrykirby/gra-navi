@@ -19,16 +19,24 @@ class MapsController < ApplicationController
         json = Net::HTTP.get(url)
         result = JSON.parse(json)
         #p result
-        @yado_data = []
+        @yado_place = []
+        @yado_reviewAverage = []
         if result.has_key?('hotels') then
             for hotel in result['hotels'] do
                 #p hotel['hotel'][0]['hotelBasicInfo']
                 lat = hotel['hotel'][0]['hotelBasicInfo']['latitude']
                 lon = hotel['hotel'][0]['hotelBasicInfo']['longitude']
+                reviewAverage = hotel['hotel'][0]['hotelBasicInfo']['reviewAverage']
 
-                @yado_data.push([lat, lon])
+                @yado_place.push([lat, lon])
+                if reviewAverage
+                    @yado_reviewAverage.push(reviewAverage)
+                else
+                    @yado_reviewAverage.push(1)
+                end
             end
         end
+        p @yado_reviewAverage
 
     end
 
