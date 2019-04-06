@@ -5,7 +5,7 @@ require 'uri'
 require 'json'
 
 class MapsController < ApplicationController
-    
+
     before_action :load_vars
 
     def oscmap
@@ -77,7 +77,7 @@ class MapsController < ApplicationController
 
         render json: @results, status: 200
     end
-    
+
     private
     def load_vars
         @rakuten_app_id = ENV['RAKUTEN_APP_ID']
